@@ -1,0 +1,73 @@
+<% layout("./layout/boilerplate") %>
+<h1>Add New Product</h1>
+<form
+  action="/products/new"
+  method="POST"
+  class="row g-3 needs-validation"
+  enctype="multipart/form-data"
+  novalidate
+>
+  <div class="col-md-6">
+    <label for="inputEmail4" class="form-label">Name of Product</label>
+    <input
+      name="name"
+      type="text"
+      class="form-control"
+      id="inputEmail4"
+      required
+    />
+  </div>
+  <div class="form-floating">
+    <textarea
+      class="form-control"
+      name="description"
+      placeholder="Leave a comment here"
+      id="floatingTextarea"
+      required
+    ></textarea>
+    <label for="floatingTextarea">Description</label>
+  </div>
+  <div class="col-md-6">
+    <label for="inputPassword4" class="form-label">Price</label>
+    <input
+      type="Number"
+      name="price"
+      class="form-control"
+      id="inputPassword4"
+      required
+    />
+  </div>
+
+  <div class="col-12">
+    <label for="formFile" class="form-label">ImageUrl</label>
+    <input
+      type="file"
+      class="form-control"
+      id="formFile"
+      name="imageUrl"
+      required
+    />
+  </div>
+  <div class="col-md-6">
+    <label for="inputCity" class="form-label">Availability</label>
+    <input
+      name="availability"
+      type="Number"
+      class="form-control"
+      id="inputCity"
+      required
+    />
+  </div>
+  <div class="col-md-4">
+    <label for="inputState" class="form-label">Category</label>
+    <select name="category" id="inputState" class="form-select">
+      <option selected>Food delivery</option>
+      <option>Instamart</option>
+      <option>DineOut</option>
+    </select>
+  </div>
+
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Add</button>
+  </div>
+</form>

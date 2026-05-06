@@ -1,0 +1,33 @@
+<% layout("./layout/boilerplate") %>
+<h1>Your Product</h1>
+
+<div class="card" style="width: 18rem">
+  <img src="<%=product.imageUrl%>" alt="food" />
+  <div class="card-body">
+    <h5 class="card-title"><%=product.name%></h5>
+    <p class="card-text"><%=product.description%></p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Price= <%=product.price%></li>
+    <li class="list-group-item">availability= <%=product.availability%></li>
+    <li class="list-group-item">category= <%=product.category%></li>
+    <li class="list-group-item">Owner=<%=product.owner.username%></li>
+  </ul>
+  <div class="card-body">
+    <% if(product.owner._id==currentUser){%>
+    <a href="/products/<%=product._id%>/edit" class="btn btn-primary">Edit</a>
+    <!-- <a href="#" class="card-link">Delete</a> -->
+    <br />
+    <hr />
+     action="/products/<%=product._id%>?_method=DELETE" method="POST">
+      <button class="btn btn-danger" type="submit">Delete</button>
+    </form>
+
+    <% }%> <%if(!isSeller){%>
+    <form action="/products/carts/<%=product._id%>/add" method="POST">
+      <button class="btn btn-primary" type="submit">Add To Cart</button>
+    </form>
+
+    <% }%>
+  </div>
+</div>

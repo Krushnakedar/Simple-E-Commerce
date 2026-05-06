@@ -1,0 +1,61 @@
+<style>
+  .container-flex {
+    display: flex;
+    flex-wrap: wrap; /* allows multiple rows */
+    gap: 1rem; /* spacing between cards */
+  }
+
+  .main-box{
+    flex: 0 1 20%; /* grow:0, shrink:1, basis:20% */
+    text-decoration: none;
+  }
+
+  .box1 img {
+    width: 100%;
+    height: 200px; /* fixed height for images */
+    object-fit: cover; /* image scales nicely */
+    border-radius: 10px;
+    border: 1px solid white;
+  }
+
+  .card-body {
+    background-color: #bee3fa;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+
+  .card-body h5 {
+    margin: 0;
+  }
+
+  .card-body ul {
+    padding-left: 1rem;
+    margin: 0;
+    font-size: 0.8rem;
+  }
+</style>
+
+<% layout("./layout/boilerplate")%>
+<div class="container-flex">
+  <%for(let product of allProduct){%>
+  <a class="main-box" href="products/<%=product._id%>"
+    ><div class="card" style="width: 100%; height: 100%">
+      <div class="box1">
+        <img src="<%=product.imageUrl%>" class="card-img-top" alt="food" />
+      </div>                                                
+      <div class="card-body">
+        <h5 class="card-title"><%=product.name%></h5>
+        <ul>
+          <li class="list-group-item">Price=<%= product.price%></li>
+          <li class="list-group-item">
+            availability=<%= product.availability%>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </a>
+
+  <%}%>
+</div>

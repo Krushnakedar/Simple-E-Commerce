@@ -1,0 +1,64 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+  <div class="container-fluid px-4">
+    <a class="navbar-brand fw-bold" href="/">🛒 ShopEase</a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#mainNavbar"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNavbar">
+      <ul class="navbar-nav me-auto gap-lg-2">
+        <li class="nav-item">
+          <a class="nav-link active" href="/products">Home</a>
+        </li>
+        <%if(!currentUser){%>
+        <li class="nav-item">
+          <a class="nav-link" href="/users/login">Customer Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/sellers/login">Seller Login</a>
+        </li>
+        <% }%> <% if(!isSeller ){%> <% if(currentUser){%>
+        <li class="nav-item">
+          <a class="nav-link" href="/products/carts/<%=currentUser%>/show"
+            >Your Cart</a
+          >
+        </li>
+
+        <%}else{%>
+        <li class="nav-item">
+          <a class="nav-link" href="/products/carts/12345/show">Your Cart</a>
+        </li>
+
+        <% }%> <%}%> <%if(isSeller){%>
+        <li class="nav-item">
+          <a class="nav-link" href="/products/new">Add New Product</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/products/<%=currentUser%>">Your Product</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/sellers/logout">Logout</a>
+        </li>
+        <%}%>
+      </ul>
+      <ul style="position: absolute; right: 0" class="navbar-nav me-auto">
+        <% if(!isSeller && currentUser){%>
+        <li class="nav-item">
+          <a class="nav-link" href="/users/logout">Logout</a>
+        </li>
+        <%}%> <%if(isSeller){%>
+        <li class="nav-item">
+          <a class="nav-link" href="/sellers/logout">Logout</a>
+        </li>
+        <%}%>
+      </ul>
+    </div>
+  </div>
+</nav>
