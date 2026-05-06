@@ -1,4 +1,3 @@
- 
 import flash from "connect-flash";
 import MongoStore from "connect-mongo"; //this is use for session data storage
 import cookieParser from "cookie-parser";
@@ -13,7 +12,7 @@ import { fileURLToPath } from "url";
 
 // Then your existing code
 dotenv.config();
-console.log("URI:", process.env.MONGO_URI);
+// console.log("URI:", process.env.MONGO_URI);
 import cartRouter from "./routes/carts.js";
 import productRouter from "./routes/products.js";
 import sellerRouter from "./routes/sellers.js";
@@ -22,8 +21,8 @@ import userRouter from "./routes/users.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-dotenv.config({ override: true});
-mongoose.set('strictQuery', false);
+dotenv.config({ override: true });
+mongoose.set("strictQuery", false);
 console.log("URI:", process.env.MONGO_URI);
 
 const app = express();
@@ -86,9 +85,9 @@ app.use((req, res, next) => {
   next();
 });
 // app.get("/", (req, res) => {
-//   res.send("server is running successfully");
+//   res.redirect("server is running successfully");
 // });
-
+app.use("/", productRouter);
 app.use("/users", userRouter);
 app.use("/sellers", sellerRouter);
 app.use("/products", productRouter);
