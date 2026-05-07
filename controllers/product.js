@@ -62,6 +62,10 @@ export const showSellerProduct = async (req, res) => {
   const { id } = req.params; // this is ownerId
 
   const allProduct = await Product.find({ owner: id });
+  if (!allProduct) {
+    allProduct = [];
+    return res.render("products/index.ejs", { allProduct });
+  }
   res.render("products/index.ejs", { allProduct });
 };
 export const updateProduct = async (req, res) => {

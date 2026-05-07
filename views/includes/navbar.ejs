@@ -41,7 +41,8 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="/products/<%=currentUser%>">Your Product</a>
+          <form action="/products/<%=currentUser%>/seller" method="GET">
+          <button class="nav-link"">Your Product</button></form>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/sellers/logout">Logout</a>

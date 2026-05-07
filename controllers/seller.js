@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 import Seller from "../model/seller.js";
 
-const JWT_SECRET_KEY = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export const login = async (req, res) => {
   let { username, password } = req.body;
@@ -21,7 +21,7 @@ export const login = async (req, res) => {
 
   const jwtToken = jwt.sign(
     { userId: user._id, username: user.username },
-    JWT_SECRET_KEY,
+    JWT_SECRET,
     {
       expiresIn: "1h",
     },

@@ -22,9 +22,10 @@ Router.route("/new")
   .get(verifyJWT, renderNewForm)
   .post(verifyJWT, upload.single("imageUrl"), createProduct);
 
+Router.get("/:id/seller", showSellerProduct);
 Router.route("/:id")
   .get(showProduct)
-  .get(showSellerProduct)
+
   .put(verifyJWT, upload.single("imageUrl"), updateProduct)
   .delete(verifyJWT, deleteProduct);
 
