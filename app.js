@@ -23,7 +23,7 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config({ override: true });
 mongoose.set("strictQuery", false);
-console.log("URI:", process.env.MONGO_URI);
+// console.log("URI:", process.env.MONGO_URI);
 
 const app = express();
 async function main() {
@@ -36,7 +36,9 @@ main()
   .catch((err) => {
     console.log(err);
   });
-
+mongoose.connection.once("open", () => {
+  console.log("DATABASE NAME:", mongoose.connection.db.databaseName);
+});
 const store = MongoStore.create({
   mongoUrl: process.env.MONGO_URI,
   crypto: {
@@ -87,7 +89,9 @@ app.use((req, res, next) => {
 // app.get("/", (req, res) => {
 //   res.redirect("server is running successfully");
 // });
-app.use("/", productRouter);
+app.get("/", (req, res) => {
+  res.redirect("/products");
+});
 app.use("/users", userRouter);
 app.use("/sellers", sellerRouter);
 app.use("/products", productRouter);

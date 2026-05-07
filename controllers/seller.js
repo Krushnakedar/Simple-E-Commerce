@@ -3,14 +3,14 @@ import jwt from "jsonwebtoken";
 
 import Seller from "../model/seller.js";
 
-const JWT_SECRET_KEY = "mysecretkey";
+const JWT_SECRET_KEY = process.env.JWT_SECRET;
 
 export const login = async (req, res) => {
   let { username, password } = req.body;
   let user = await Seller.findOne({ username });
   if (!user) {
     req.flash("failure", "Seller does not exist");
-    res.redirect("/sellers/login");
+    return res.redirect("/sellers/login");
   }
 
   const isMatch = await compare(password, user.password);
@@ -24,7 +24,7 @@ export const login = async (req, res) => {
     JWT_SECRET_KEY,
     {
       expiresIn: "1h",
-    }
+    },
   );
   res.cookie("jwt", jwtToken, {
     httpOnly: true,
@@ -36,20 +36,20 @@ export const login = async (req, res) => {
   req.session.isSeller = true;
 
   req.flash("success", "Welcome to our Platform");
-  res.redirect("/products");
+  return res.redirect("/products");
 };
 
 export const renderLoginForm = (req, res) => {
-  res.render("sellers/login.ejs");
+  return res.render("sellers/login.ejs");
 };
 
 export const register = async (req, res) => {
   let { username, password, company, companyEmail, address } = req.body;
-  let existing = Seller.findOne({ username });
+  let existing = await Seller.findOne({ username });
 
   if (existing) {
     req.flash("failure", "Seller already exists");
-    res.redirect("/sellers/register");
+    return res.redirect("/sellers/register");
   }
 
   const hashed = await hash(password, 10);
@@ -61,11 +61,11 @@ export const register = async (req, res) => {
     address,
     password: hashed,
   });
-  req.flash("success", "Welcome to our Platform");
-  res.redirect("/sellers/login");
+  req.flash("success", "Registered successfully");
+  return res.redirect("/sellers/login");
 };
 export const renderRegisterForm = (req, res) => {
-  res.render("sellers/register.ejs");
+  return res.render("sellers/register.ejs");
 };
 
 export const logout = (req, res) => {
@@ -77,6 +77,6 @@ export const logout = (req, res) => {
       return res.redirect("/products");
     }
 
-    res.redirect("/sellers/login?logout=success");
+    return res.redirect("/sellers/login?logout=success");
   });
 };

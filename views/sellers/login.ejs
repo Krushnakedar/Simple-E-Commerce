@@ -14,7 +14,11 @@
   <body>
     <div class="d-flex justify-content-between text-center">
       <h1>Seller Login Page</h1>
-      <a href="/products" style="text-decoration: none">Back</a>
+      <form action="/products" method="GET">
+        <button class="btn btn-primary" style="text-decoration: none">
+          Back
+        </button>
+      </form>
     </div>
     <br />
     <%- include("../includes/flash.ejs")%>

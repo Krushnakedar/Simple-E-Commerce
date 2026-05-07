@@ -2,8 +2,7 @@ import { compare, hash } from "bcrypt";
 import jwt from "jsonwebtoken";
 
 import User from "../model/user.js";
-
-const JWT_SECRET = "mysecretkey";
+const JWT_SECRET_KEY = process.env.JWT_SECRET;
 
 export const login = async (req, res) => {
   const { username, password } = req.body;
@@ -27,7 +26,7 @@ export const login = async (req, res) => {
       username: user.username,
     },
     JWT_SECRET,
-    { expiresIn: "1h" }
+    { expiresIn: "1h" },
   );
 
   res.cookie("jwt", jwtToken, {
@@ -35,16 +34,16 @@ export const login = async (req, res) => {
     maxAge: 60 * 60 * 1000,
   });
   user.token = jwtToken;
-  user.save();
+  await user.save();
   req.session.userId = user._id;
   req.session.isSeller = false;
 
   req.flash("success", "Login successful");
-  res.redirect("/products");
+  return res.redirect("/products");
 };
 
 export const renderLoginForm = async (req, res) => {
-  res.render("users/login.ejs");
+  return res.render("users/login.ejs");
 };
 
 export const register = async (req, res) => {
@@ -52,18 +51,18 @@ export const register = async (req, res) => {
   const existing = await User.findOne({ username });
 
   if (existing) {
-    req.flash("failure", "${username} User already exists");
+    req.flash("failure", "username User already exists");
     return res.redirect("/users/register");
   }
   const hashed = await hash(password, 10);
 
   await User.create({ username, email, password: hashed, address });
   req.flash("success", "Registered successfully");
-  res.redirect("/users/login");
+  return res.redirect("/users/login");
 };
 
 export const renderRegisterForm = async (req, res) => {
-  res.render("users/register.ejs");
+  return res.render("users/register.ejs");
 };
 
 export const logout = async (req, res) => {
@@ -76,6 +75,6 @@ export const logout = async (req, res) => {
       console.log("session destroy error: ", err);
       return res.redirect("/products");
     }
-    res.redirect("/users/login?logout=success");
+    return res.redirect("/users/login?logout=success");
   });
 };
